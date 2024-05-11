@@ -15,6 +15,15 @@ class SidewaysShooter:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP:
+                        self.ship.direction = 1
+                    elif event.key == pygame.K_DOWN:
+                        self.ship.direction = -1
+                if event.type == pygame.KEYUP:
+                    self.ship.direction = 0
+
+            self.ship.update()
             self.screen.fill(self.bg_color)
             self.screen.blit(self.ship.image, self.ship.rect)
             pygame.display.flip()

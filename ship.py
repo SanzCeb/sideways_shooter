@@ -7,11 +7,10 @@ class Ship:
         self.rect.midleft = ss_game.screen.get_rect().midleft
 
         self.y = float(self.rect.y)
+        self.direction = 0
     
-    def move_up(self):
-        self.y -= 1
-        self.rect.y = self.y
-    
-    def move_down(self):
-        self.y += 1
-        self.rect.y = self.y
+    def update(self):
+        """Update the position of the ship"""
+        if self.direction:
+            self.y += self.direction
+            self.rect.y = self.y
