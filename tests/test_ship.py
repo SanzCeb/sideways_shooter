@@ -1,14 +1,12 @@
 import pytest 
 
 from ship import Ship
-from sideways_shooter import SidewaysShooter
+from mocks import mock_sideways_shooter
 
 @pytest.fixture
-def ship():
-    ss_game = SidewaysShooter()
-    ship = Ship(ss_game)
+def ship(mock_sideways_shooter):
+    ship = Ship(mock_sideways_shooter)
     return ship
-
 
 def test_ship_move_up(ship):
     old_pos = (ship.rect.x, ship.rect.y)
