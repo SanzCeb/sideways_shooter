@@ -5,7 +5,8 @@ import pygame
 from ship import Ship
 class SidewaysShooter:
     def __init__(self):
-        self.screen = pygame.display.set_mode((1200, 800), vsync=60)
+        self.screen = pygame.display.set_mode((1200, 800))
+        self.clock = pygame.time.Clock()
         self.bg_color = (230, 230, 230)
         self.ship = Ship(self)
 
@@ -17,6 +18,8 @@ class SidewaysShooter:
             self.screen.fill(self.bg_color)
             self.screen.blit(self.ship.image, self.ship.rect)
             pygame.display.flip()
+            self.clock.tick(60)
+
 
 if __name__ == '__main__':
     SidewaysShooter().run_game()
