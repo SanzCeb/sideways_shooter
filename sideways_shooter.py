@@ -27,11 +27,9 @@ class SidewaysShooter:
 
         while alien_x < (self.settings.screen_width - alien_width):
             while alien_y < (self.settings.screen_height - alien_height):
-                new_alien = Alien(self)
-                new_alien.rect.x = alien_x
-                new_alien.rect.y = alien_y
-                alien_y += alien_height * 2
+                new_alien = Alien(self, alien_x, alien_y)
                 self.aliens.add(new_alien)
+                alien_y += alien_height * 2
             alien_x += alien_width * 2
             alien_y = alien_height
 
@@ -75,6 +73,7 @@ class SidewaysShooter:
 
     
     def _update_screen(self):
+        """Draw the new status of the objects on the screen."""
         self.screen.fill(self.settings.bg_color)
         self.ship.draw()        
         self._draw_bullets()
