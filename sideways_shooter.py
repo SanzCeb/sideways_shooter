@@ -39,7 +39,10 @@ class SidewaysShooter:
                 self.ship.direction = 0
 
     def _check_keydown_events(self, event):
-        if event.key == pygame.K_UP:
+        """Handle game's behaviour when a key is pressed"""
+        if event.key == pygame.K_q:
+            sys.exit()
+        elif event.key == pygame.K_UP:
             self.ship.direction = -1
         elif event.key == pygame.K_DOWN:
             self.ship.direction = 1
