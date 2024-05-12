@@ -21,7 +21,19 @@ class SidewaysShooter:
     
     def _create_fleet(self):
         """Create the aliens at the start of the game."""
-        self.aliens.add(Alien(self))
+        alien = Alien(self)
+        alien_width, alien_height = alien.rect.size
+        alien_x, alien_y = 2 * alien_width, alien_height
+
+        while alien_x < (self.settings.screen_width - alien_width):
+            while alien_y < (self.settings.screen_height - alien_height):
+                new_alien = Alien(self)
+                new_alien.rect.x = alien_x
+                new_alien.rect.y = alien_y
+                alien_y += alien_height * 2
+                self.aliens.add(new_alien)
+            alien_x += alien_width * 2
+            alien_y = alien_height
 
     def run_game(self):
         """Run the main loop of the game"""

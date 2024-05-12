@@ -9,9 +9,9 @@ class Alien(Sprite):
         self.screen_rect = self.screen.get_rect()
         
         self.image = pygame.image.load('images/alien.bmp')
-        self.image_rect = self.image.get_rect()
+        self.rect = self.image.get_rect()
         
-        self.image_rect.center = self.screen_rect.center
+        self.rect.center = self.screen_rect.center
 
     def draw(self):
-        self.screen.blit(self.image, self.image_rect)
+        self.screen.blit(self.image, self.rect)
