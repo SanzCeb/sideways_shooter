@@ -1,3 +1,5 @@
+import math
+
 import pygame
 
 from mocks import mock_sideways_shooter
@@ -38,3 +40,21 @@ def test_create_fleet(mock_sideways_shooter):
 
     assert len(mock_sideways_shooter.aliens) == num_aliens
     
+def test_randomize_fleet(mock_sideways_shooter):
+
+    # Cleaning the initial aliens will avoid side effects
+    mock_sideways_shooter.aliens.empty()    
+    mock_sideways_shooter._create_fleet()
+
+    expected_num_aliens = round(
+        len(mock_sideways_shooter.aliens)
+          * mock_sideways_shooter.settings.fleet_density)
+    
+    mock_sideways_shooter._randomize_fleet()
+
+    assert len(mock_sideways_shooter.aliens) == expected_num_aliens
+
+def test_randomize_empty_fleet(mock_sideways_shooter):
+    mock_sideways_shooter.aliens.empty()
+    mock_sideways_shooter._randomize_fleet()
+    assert not mock_sideways_shooter.aliens

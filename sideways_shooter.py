@@ -1,4 +1,5 @@
 import sys
+from random import randint
 
 import pygame
 from pygame.sprite import Group
@@ -18,6 +19,8 @@ class SidewaysShooter:
         self.aliens = Group()
 
         self._create_fleet()
+        self._randomize_fleet()
+
     
     def _create_fleet(self):
         """Create the aliens at the start of the game."""
@@ -32,6 +35,16 @@ class SidewaysShooter:
                 alien_y += alien_height * 2
             alien_x += alien_width * 2
             alien_y = alien_height
+        
+
+    def _randomize_fleet(self):
+        aliens_to_remove = round(
+            len(self.aliens) * (1 - self.settings.fleet_density))
+        while aliens_to_remove:
+            index_to_remove = randint(0, len(self.aliens) - 1)
+            alien_to_remove = self.aliens.sprites()[index_to_remove]
+            self.aliens.remove(alien_to_remove)
+            aliens_to_remove -= 1
 
     def run_game(self):
         """Run the main loop of the game"""
