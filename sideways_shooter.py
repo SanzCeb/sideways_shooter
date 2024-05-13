@@ -52,8 +52,13 @@ class SidewaysShooter:
             self._check_events()
             self.ship.update()
             self._update_bullets()
+            self._update_fleet()
             self._update_screen()
             self.clock.tick(60)
+    
+    def _update_fleet(self):
+        """Move the aliens towards the ship"""
+        self.aliens.update()
 
     def _update_bullets(self):
         """Move the bullets and remove them if they are off the game"""

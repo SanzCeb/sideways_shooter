@@ -12,3 +12,6 @@ class Settings:
 
         # Alien settings
         self.fleet_density = 0.5
+        # Direction can be 1 or -1
+        self.fleet_direction = 1
+        self.fleet_speed = 1.5
