@@ -93,8 +93,11 @@ class SidewaysShooter:
         elif event.key == pygame.K_DOWN:
             self.ship.direction = 1
         elif event.key == pygame.K_SPACE:
-            new_bullet = Bullet(self)
-            self.bullets.add(new_bullet)
+            self._fire_bullet()
+
+    def _fire_bullet(self):
+        new_bullet = Bullet(self)
+        self.bullets.add(new_bullet)
 
     
     def _update_screen(self):

@@ -20,9 +20,7 @@ def test_remove_bullet(mock_sideways_shooter):
     screen_width = mock_sideways_shooter.settings.screen_width
     mock_sideways_shooter.settings.bullet_speed = screen_width * 2
 
-    # Simulate pressing the space key to fire a bullet
-    keydown_space = Event(pygame.KEYDOWN, key=pygame.K_SPACE)
-    mock_sideways_shooter._check_keydown_events(keydown_space)
+    mock_sideways_shooter._fire_bullet()
     
     # Check the bullet is actually created
     assert mock_sideways_shooter.bullets.sprites()
