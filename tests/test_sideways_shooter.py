@@ -8,18 +8,26 @@ from pygame.event import Event
 from alien import Alien
 
 def test_ship_init_position(mock_sideways_shooter):
+    """Test the ship is initialized in the midleft side of the screen."""
     ship_rect = mock_sideways_shooter.ship.rect
     screen_rect = mock_sideways_shooter.screen.get_rect()
     assert ship_rect.midleft == screen_rect.midleft
 
 def test_remove_bullet(mock_sideways_shooter):
     """Test that a bullet that goes off the screen is removed"""
+    
+    # Make the bullet go off the screen at the next update
     screen_width = mock_sideways_shooter.settings.screen_width
     mock_sideways_shooter.settings.bullet_speed = screen_width * 2
 
+    # Simulate pressing the space key to fire a bullet
     keydown_space = Event(pygame.KEYDOWN, key=pygame.K_SPACE)
     mock_sideways_shooter._check_keydown_events(keydown_space)
+    
+    # Check the bullet is actually created
     assert mock_sideways_shooter.bullets.sprites()
+
+    # Update bullets and check if it's removed after going off-screen
     mock_sideways_shooter._update_bullets()
     assert not mock_sideways_shooter.bullets.sprites()
 
@@ -55,6 +63,7 @@ def test_randomize_fleet(mock_sideways_shooter):
     assert len(mock_sideways_shooter.aliens) == expected_num_aliens
 
 def test_randomize_empty_fleet(mock_sideways_shooter):
+    """Test that randomization works properly with empty fleets"""
     mock_sideways_shooter.aliens.empty()
     mock_sideways_shooter._randomize_fleet()
     assert not mock_sideways_shooter.aliens
