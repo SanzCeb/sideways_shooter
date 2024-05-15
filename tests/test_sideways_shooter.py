@@ -58,3 +58,13 @@ def test_randomize_empty_fleet(mock_sideways_shooter):
     mock_sideways_shooter.aliens.empty()
     mock_sideways_shooter._randomize_fleet()
     assert not mock_sideways_shooter.aliens
+
+def test_fleet_moves_toward_ship(mock_sideways_shooter):
+    alien = mock_sideways_shooter.aliens.sprites()[0]
+    previousx = alien.rect.x
+    fleet_sideway_speed = mock_sideways_shooter.settings.fleet_sideway_speed
+    mock_sideways_shooter.settings.fleet_speed = 100_000
+
+    mock_sideways_shooter._update_fleet()
+    
+    assert alien.rect.x == (previousx - fleet_sideway_speed)

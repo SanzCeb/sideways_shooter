@@ -22,12 +22,15 @@ def test_alien_goes_up_and_down(mock_sideways_shooter, alien):
 
 
 def test_alien_check_edges(mock_sideways_shooter, alien):
-    mock_sideways_shooter.settings.fleet_speed = 100_000
-    screen_height = mock_sideways_shooter.settings.screen_height
+    
+    assert not alien.check_edges()
 
+    mock_sideways_shooter.settings.fleet_speed = 100_000
     alien.update()
-    assert alien.rect.bottom <= screen_height
+    assert alien.check_edges()
 
     mock_sideways_shooter.settings.fleet_direction *= -1
     alien.update()
-    assert alien.rect.top >= 0
+    alien.update()
+    
+    assert alien.check_edges()

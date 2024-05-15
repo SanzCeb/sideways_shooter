@@ -58,7 +58,14 @@ class SidewaysShooter:
     
     def _update_fleet(self):
         """Move the aliens towards the ship"""
-        self.aliens.update()
+        for alien in self.aliens:
+            alien.update()
+            if alien.check_edges():
+                self.settings.fleet_direction *= -1
+                for alien in self.aliens:
+                    alien.rect.x -= self.settings.fleet_sideway_speed
+                break
+
 
     def _update_bullets(self):
         """Move the bullets and remove them if they are off the game"""

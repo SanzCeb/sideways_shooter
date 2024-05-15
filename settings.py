@@ -15,3 +15,4 @@ class Settings:
         # Direction can be 1 or -1
         self.fleet_direction = 1
         self.fleet_speed = 1.5
+        self.fleet_sideway_speed = 20

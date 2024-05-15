@@ -17,17 +17,14 @@ class Alien(Sprite):
 
     
     def update(self):
-        
+        """Move the alien toward the ship"""
         self.rect.y += int(self.settings.fleet_direction 
                         * self.settings.fleet_speed)
-
-        if self.rect.bottom >= self.settings.screen_height:
-            self.settings.fleet_direction *= -1
-            self.rect.bottom = self.settings.screen_height
-        elif self.rect.top <= 0:
-            self.rect.top = 0
-            self.settings.fleet_direction *= -1
-
+    
+    def check_edges(self):
+        """Return true if the alien is off the screen."""
+        return (self.rect.bottom >= self.settings.screen_height or 
+                self.rect.top <= 0)
 
     def draw(self):
         self.screen.blit(self.image, self.rect)
