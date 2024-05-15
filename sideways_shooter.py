@@ -73,6 +73,9 @@ class SidewaysShooter:
         for bullet in self.bullets.copy():
             if bullet.rect.left >= self.settings.screen_width:
                 self.bullets.remove(bullet)
+        
+        # Make aliens and bullets dissaper when both collide
+        pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
 
     def _check_events(self):
         """Check the game events"""
