@@ -16,3 +16,6 @@ class Settings:
         self.fleet_direction = 1
         self.fleet_speed = 1.5
         self.fleet_sideway_speed = 20
+
+        # Ship settings
+        self.max_ship_hit = 3

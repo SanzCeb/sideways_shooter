@@ -23,6 +23,8 @@ class SidewaysShooter:
 
         self._create_random_fleet()
 
+        self.game_active = True
+
     def _create_random_fleet(self):
         """Sets a fleet on aliens placed in random positions"""
         self._create_fleet()
@@ -57,9 +59,12 @@ class SidewaysShooter:
         """Run the main loop of the game"""
         while True:
             self._check_events()
-            self.ship.update()
-            self._update_bullets()
-            self._update_fleet()
+
+            if self.game_active:
+                self.ship.update()
+                self._update_bullets()
+                self._update_fleet()
+
             self._update_screen()
             self.clock.tick(60)
     
@@ -76,13 +81,16 @@ class SidewaysShooter:
         self._check_ship_hit()
 
     def _check_ship_hit(self):
-        """Reset the game if the ship is hit"""
+        """Reset the game if the ship is hit. The game is over
+        when the ship is hit three times."""
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             self.game_stats.ship_hit +=1
             self.bullets.empty()
             self.aliens.empty()
             self._create_random_fleet()
-            sleep(0.5)
+            sleep(0.5)        
+        if self.game_stats.ship_hit > 3:
+            self.game_active = False
 
 
     def _update_bullets(self):
