@@ -21,6 +21,10 @@ class SidewaysShooter:
         self.bullets = Group()
         self.aliens = Group()
 
+        self._create_random_fleet()
+
+    def _create_random_fleet(self):
+        """Sets a fleet on aliens placed in random positions"""
         self._create_fleet()
         self._randomize_fleet()
 
@@ -69,12 +73,15 @@ class SidewaysShooter:
                     alien.rect.x -= self.settings.fleet_sideway_speed
                 break
         
+        self._check_ship_hit()
+
+    def _check_ship_hit(self):
+        """Reset the game if the ship is hit"""
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             self.game_stats.ship_hit +=1
             self.bullets.empty()
             self.aliens.empty()
-            self._create_fleet()
-            self._randomize_fleet()
+            self._create_random_fleet()
             sleep(0.5)
 
 
