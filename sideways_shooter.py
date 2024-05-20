@@ -1,10 +1,12 @@
 import sys
+from time import sleep
 from random import randint
 
 import pygame
 from pygame.sprite import Group
 
 from settings import Settings
+from game_stats import GameStats
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
@@ -14,6 +16,7 @@ class SidewaysShooter:
         self.screen = pygame.display.set_mode((1200, 800))
         self.clock = pygame.time.Clock()
         self.settings = Settings(self)
+        self.game_stats = GameStats()
         self.ship = Ship(self)
         self.bullets = Group()
         self.aliens = Group()
@@ -65,6 +68,14 @@ class SidewaysShooter:
                 for alien in self.aliens:
                     alien.rect.x -= self.settings.fleet_sideway_speed
                 break
+        
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            self.game_stats.ship_hit +=1
+            self.bullets.empty()
+            self.aliens.empty()
+            self._create_fleet()
+            self._randomize_fleet()
+            sleep(0.5)
 
 
     def _update_bullets(self):
@@ -86,6 +97,7 @@ class SidewaysShooter:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self.ship.direction = 0
+            
 
     def _check_keydown_events(self, event):
         """Handle game's behaviour when a key is pressed"""
