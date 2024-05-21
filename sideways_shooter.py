@@ -22,11 +22,9 @@ class SidewaysShooter:
         self.bullets = Group()
         self.aliens = Group()
 
-        self._create_random_fleet()
 
         self.game_active = False
         self.play_button = Button(self, "Play")
-        pygame
 
     def _create_random_fleet(self):
         """Sets a fleet on aliens placed in random positions"""
@@ -94,6 +92,7 @@ class SidewaysShooter:
             sleep(0.5)        
         if self.game_stats.ship_hit > 3:
             self.game_active = False
+            pygame.mouse.set_visible(True)
 
 
     def _update_bullets(self):
@@ -121,8 +120,19 @@ class SidewaysShooter:
             
     def _check_play_button(self, mouse_pos):
         """Start a new game when the player clicks Play."""
-        if self.play_button.rect.collidepoint(mouse_pos):
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        if button_clicked and not self.game_active:
+            self.game_stats.reset_stats()
             self.game_active = True
+
+            self.bullets.empty()
+            self.aliens.empty()
+
+            self._create_random_fleet()
+            self.center_ship()
+
+            # Hide the mouse cursor.
+            pygame.mouse.set_visible(False)
 
     def _check_keydown_events(self, event):
         """Handle game's behaviour when a key is pressed"""
@@ -139,6 +149,9 @@ class SidewaysShooter:
         new_bullet = Bullet(self)
         self.bullets.add(new_bullet)
 
+    def center_ship(self):
+        """Center the ship on the screen."""
+        self.ship.rect.midleft = self.screen.get_rect().midleft
     
     def _update_screen(self):
         """Draw the new status of the objects on the screen."""
