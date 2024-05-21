@@ -103,7 +103,18 @@ class SidewaysShooter:
                 self.bullets.remove(bullet)
         
         # Make aliens and bullets dissaper when both collide
-        pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        self._check_bullet_alien_collisions()
+
+    def _check_bullet_alien_collisions(self):
+        """Check whether bullets and aliens have collided and act upon it."""
+        pygame.sprite.groupcollide(
+            self.bullets, self.aliens, True, True)
+        
+        if not self.aliens:
+            self.bullets.empty()
+            self._create_random_fleet()
+            self.settings.increase_speed()
+
 
     def _check_events(self):
         """Check the game events"""
@@ -122,6 +133,7 @@ class SidewaysShooter:
         """Start a new game when the player clicks Play."""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.game_active:
+            self.settings.initialize_dynamic_settings()
             self.game_stats.reset_stats()
             self.game_active = True
 
