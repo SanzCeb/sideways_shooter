@@ -10,6 +10,7 @@ from game_stats import GameStats
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+from button import Button
 class SidewaysShooter:
     def __init__(self):
         pygame.init()
@@ -23,7 +24,9 @@ class SidewaysShooter:
 
         self._create_random_fleet()
 
-        self.game_active = True
+        self.game_active = False
+        self.play_button = Button(self, "Play")
+        pygame
 
     def _create_random_fleet(self):
         """Sets a fleet on aliens placed in random positions"""
@@ -112,7 +115,14 @@ class SidewaysShooter:
                 self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
                 self.ship.direction = 0
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button(mouse_pos)
             
+    def _check_play_button(self, mouse_pos):
+        """Start a new game when the player clicks Play."""
+        if self.play_button.rect.collidepoint(mouse_pos):
+            self.game_active = True
 
     def _check_keydown_events(self, event):
         """Handle game's behaviour when a key is pressed"""
@@ -136,6 +146,10 @@ class SidewaysShooter:
         self.ship.draw()        
         self._draw_bullets()
         self._draw_aliens()
+
+        if not self.game_active:
+            self.play_button.draw_button()
+
         pygame.display.flip()
 
     def _draw_aliens(self):
